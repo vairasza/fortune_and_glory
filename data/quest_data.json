@@ -1,0 +1,29 @@
+[
+    {
+        "text_decision": "Vor dir tut sich eine tiefe Schlucht auf, über die eine wackelige Hängebrücke führt. Die Brücke könnte jeden Moment einstürzen und dich in die Tiefe reißen. Betrittst du die Brücke?",
+        "text_confirm": "Auf der Mitte der Brücke hörst du ein bedrohliches Zischen: Eines der Seile, das die Brücke hält, ist gerissen. Renne um dein Leben!",
+        "text_deny": "Du versuchst, einen anderen Weg um die Schlucht herum zu finden, doch das kostet Zeit – Setze eine Runde aus.",
+        "quest_yes_category": "Geschwindigkeit",
+        "quest_yes_price": 5,
+        "quest_no_category": "Aussetzen",
+        "quest_no_price": 0
+    },
+    {
+        "text_decision": "Am Himmel taucht ein riesiger Feuerdrache auf. Dir ist bewusst, dass er naheliegende Dörfer auslöschen wird. Möchtest du der Held für viele Menschen sein und dich dem Drachen im Nahkampf stellen?",
+        "text_confirm": "Als tapferer Held stellst du dich mit Schwert und Schild diesem Monster. Ein erbitterter Kampf beginnt...",
+        "text_deny": "Du weißt genau, dass du nicht die Stärke besitzt, um den Drachen alleine niederzuringen. Du versuchst dich zu verstecken und hoffst, dass du nicht entdeckt wirst.",
+        "quest_yes_category": "Stärke",
+        "quest_yes_price": 15,
+        "quest_no_category": "Intelligenz",
+        "quest_no_price": 10
+    },
+    {
+        "text_decision": "Du entscheidest dich den kurzen Weg durch den Elfenwald einzuschlagen, um nicht tagelang außen herumlaufen zu müssen. Nach einiger Zeit taucht eine Patrouille von Elfenbogenschützen auf und nimmt dich fest: möchtest du den Hauptmann davon überzeugen, dass du harmlos bist und nur auf Durchreise bist?",
+        "text_confirm": "Du versucht den Hauptmann mit deinem Charisma zu überzeugen, dass du nur auf der Durchreise bist und du keinen Ärger machen wirst.",
+        "text_deny": "Dein Pech. Du wirst in die nächste Stadt gebracht und dort solange eingesperrt, bis über dein Urteil entschieden wird - Setze eine Runde aus.",
+        "quest_yes_category": "Charisma",
+        "quest_yes_price": 9,
+        "quest_no_category": "Aussetzen",
+        "quest_no_price": 0
+    }
+]

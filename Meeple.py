@@ -1,6 +1,6 @@
 import random
 
-class Spielfigur:
+class Meeple:
 
     '''
     name: argument
@@ -17,11 +17,11 @@ class Spielfigur:
 
     def __init__(self, name):
         self.name = name
-        self.lifepoints = Spielfigur.basic_stat + random.randint( - Spielfigur.spread, Spielfigur.spread )
-        self.strength = Spielfigur.basic_stat + random.randint( - Spielfigur.spread, Spielfigur.spread )
-        self.intellect = Spielfigur.basic_stat + random.randint( - Spielfigur.spread, Spielfigur.spread )
-        self.speed = Spielfigur.basic_stat + random.randint( - Spielfigur.spread, Spielfigur.spread )
-        self.charisma = Spielfigur.basic_stat + random.randint( - Spielfigur.spread, Spielfigur.spread )
+        self.lifepoints = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
+        self.strength = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
+        self.intellect = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
+        self.speed = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
+        self.charisma = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
         self.inventory = []
         self.skipMove = False
 
@@ -43,7 +43,7 @@ class Spielfigur:
         self.skipMove = False
 
     def addObjToInventory(self, item):
-        if len(self.inventory) == Spielfigur.inventory_max_size:
+        if len(self.inventory) == Meeple.inventory_max_size:
             return None
         else:
             self.inventory.append(item)
@@ -58,11 +58,11 @@ class Spielfigur:
 
     def increaseProgress(step, direction = True):
         if direction:
-            Spielfigur.progress += step
+            Meeple.progress += step
         else:
-            Spielfigur.progress -= step
+            Meeple.progress -= step
         
-        return Spielfigur.progress
+        return Meeple.progress
     
     def getProgress():
-        return Spielfigur.progress
+        return Meeple.progress
