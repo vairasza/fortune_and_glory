@@ -7,23 +7,41 @@ class Meeple:
     stats: lifepoints, strength, int, speed, charisma: value is randomly selecte btw 2-6
     backpack: -> list of objects (limit - N=5)
     bool: skip moves
-    static progress: successful moves players have made
+    static PROGRESS: successful moves players have made
     '''
 
-    progress = 0
-    basic_stat = 4
-    spread = 2
-    inventory_max_size = 5
+    PROGRESS = 0
+    BASIC_STAT = 4
+    BASIC_STAT_SPREAD = 2
+    INV_MAX_SIZE = 5
 
-    def __init__(self, name):
+    #herotype: 0->knight, 1->wizard, 2->archer ==> different stat boni
+    def __init__(self, name, hero_type=0):
         self.name = name
-        self.lifepoints = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
-        self.strength = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
-        self.intellect = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
-        self.speed = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
-        self.charisma = Meeple.basic_stat + random.randint( - Meeple.spread, Meeple.spread )
+        self.lifepoints = Meeple.getRandomStat()
+        self.strength = Meeple.getRandomStat()
+        self.intellect = Meeple.getRandomStat()
+        self.speed = Meeple.getRandomStat()
+        self.charisma = Meeple.getRandomStat()
         self.inventory = []
         self.skipMove = False
+
+    @staticmethod
+    def getRandomStat():
+        return Meeple.BASIC_STAT + random.randint( - Meeple.BASIC_STAT_SPREAD, Meeple.BASIC_STAT_SPREAD )
+
+    def __str__(self):
+        item_string = ''.join([f"* {item.name} ({', '.join([f'{key}: +{val}' for key, val in item.properties.items()])})\n" for item in self.inventory])
+
+        return f"Name: {self.name}\n"\
+            f"Schritte zum Erfolg: {Meeple.PROGRESS}\n"\
+            f"Lebenspunkte: {self.lifepoints}\n"\
+            f"Stärkepunkte: {self.strength}\n"\
+            f"Intelligenz: {self.intellect}\n"\
+            f"Geschwindigkeit: {self.speed}\n"\
+            f"Charisma: {self.charisma}\n"\
+            f"Im Rucksack:\n"\
+            f"{item_string}"
 
     def getName(self):
         return self.name
@@ -43,7 +61,7 @@ class Meeple:
         self.skipMove = False
 
     def addObjToInventory(self, item):
-        if len(self.inventory) == Meeple.inventory_max_size:
+        if len(self.inventory) == Meeple.INV_MAX_SIZE:
             return None
         else:
             self.inventory.append(item)
@@ -56,13 +74,15 @@ class Meeple:
         else:
             return self.inventory
 
-    def increaseProgress(step, direction = True):
+    #remove item and insert other item
+
+    def increasePROGRESS(step, direction = True):
         if direction:
-            Meeple.progress += step
+            Meeple.PROGRESS += step
         else:
-            Meeple.progress -= step
+            Meeple.PROGRESS -= step
         
-        return Meeple.progress
+        return Meeple.PROGRESS
     
-    def getProgress():
-        return Meeple.progress
+    def getPROGRESS():
+        return Meeple.PROGRESS

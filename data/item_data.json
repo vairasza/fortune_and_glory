@@ -1,32 +1,22 @@
 [
     {
-        "name": "Schwert von Duum",
+        "name": "Schwert des geachteten Edelmanns",
         "properties": {
-            "lifepoints": 0,
-            "strength": 3,
-            "intellect": 0,
-            "speed": -1,
-            "charisma": 0
+            "strength": 2,
+            "charisma": 1
         }
     },
     {
         "name": "Schild des Löwen",
         "properties": {
-            "lifepoints": 3,
-            "strength": 1,
-            "intellect": 0,
-            "speed": -1,
-            "charisma": 0
+            "lifepoints": 2,
+            "strength": 1
         }
     },
     {
         "name": "Goldene Rüstung des einsamen Ritters",
         "properties": {
-            "lifepoints": 4,
-            "strength": 0,
-            "intellect": 0,
-            "speed": -1,
-            "charisma": 0
+            "lifepoints": 3
         }
     }
 ]
