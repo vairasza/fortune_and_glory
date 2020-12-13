@@ -5,17 +5,8 @@ import data.Constants as Constants
 import random
 
 quest_1 = Quest(0)
-#print(quest_1.text_decision)
-
-item_1 = Item(0)
-#print(item_1.getName())
-
 player_1 = Meeple("Richard Löwenherz")  #get via input
-player_1.addItemToInventory(Item(0))
-player_1.addItemToInventory(Item(2))
-
-print(player_1.intellect)
-print(getattr(player_1, "intellect"))
+Item.loadItems()
 
 def rollDices(number_of_dices):
     return sum([random.randint(1, Constants.DICE_SIDES) for i in range(number_of_dices)])
@@ -48,10 +39,10 @@ def executeQuest(quest, hero):
 
         #6. look up how many dices the player can roll
         number_of_dices = getattr(hero, determined_category)
-        rolling_result = Meeple.rollDices(number_of_dices)
+        rolling_result = rollDices(number_of_dices)
         
         #7. present rolling result to player
-        print(Constants.QUEST_ROLLING_RESULT.replace("XX", challenge).replace("YY", rolling_result))
+        print(Constants.QUEST_ROLLING_RESULT.replace("XX", str(challenge)).replace("YY", str(rolling_result)))
 
         #8. decision for this round
         round_result = challenge - rolling_result
@@ -72,61 +63,64 @@ def executeQuest(quest, hero):
         #9b. player succeeded on the quest and get an item as reward
         #9b. check if play already has item/more than 5 and ask what item he wants remove
         else:
-            rnd_id = random.randint(1, Item.getSizeItemList() - 1)
+            print(Item.getSizeItemList())
+            rnd_id = random.randint(0, Item.getSizeItemList() - 1)
             new_item = Item(rnd_id)
-            feedback = hero.addItemToInventory(new_item)
-            print(Constants.QUEST_HERO_RECEIVED_ITEM.replace("XX", Item.getName()))
 
-            #return None if list is >= max_size, return item is double, return list if item was added
+            print(Constants.QUEST_HERO_RECEIVED_ITEM.replace("XX", new_item.getName()).replace("YY", new_item.getStats()))
 
-            if (feedback is None):
-                print(Constants.QUEST_HERO_INV_FULL)
-                player_decision = True
-
-                while True:
-                    player_input = input(Constants.QUEST_INPUT_DECISION)
-
-                    if (player_input in ["ja", "j"]):
-                        player_decision = True
-                        break
-                    if (player_input in ["nein", "n"]):
-                        player_decision = False
-                        break
+            if (hero.checkInventoryFull()):
                 
-                #1 - decide for new item
-                if player_decision:
-                    player_decision = 0
-                    len_inv = len(hero.inventory)
+                if (hero.checkItemInInventory(new_item)):
+                    #inv full and item in inv => draw
+                    print(Constants.QUEST_HERO_INV_FULL_1)
+                    print(Constants.QUEST_HERO_ITEM_DROPPED)
+                    #done
+                else:
+                    #inv full and item not in inv => replace question
+                    print(Constants.QUEST_HERO_INV_FULL_2)
+
+                    player_decision = True
+
+                    while True:
+                        player_input = input(Constants.QUEST_INPUT_DECISION)
+
+                        if (player_input in ["ja", "j"]):
+                            player_decision = True
+                            break
+                        if (player_input in ["nein", "n"]):
+                            player_decision = False
+                            break
+                    
+                    if player_decision:
+                    #len_inv = hero.getInventoryCurrentSize()
 
                     print(" | ".join([f"{i + 1} - {val}" for i, val in range(len_inv )]))
 
-                    while True:  
-                        player_input = input(Constants.QUEST_INPUT_ITEMS.replace("XX", str([i for i in range(1,len_inv + 1)])))
+                        while True:  
+                            player_input = input(Constants.QUEST_INPUT_ITEMS.replace("XX", str([i + 1 for i in range(len_inv)])))
 
-                        if player_input.isnumeric() and player_input > 0 and player_input < len_inv + 2:
+                            if player_input.isnumeric() and player_input > 0 and player_input < len_inv + 2:
+                                del_item = hero.getItemById(int(player_input))
 
-                            break
+                                hero.addItemToInventory(new_item)
+                                print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.name).replace("YY", new_item.getName()))
 
-                        #if player has decided to remove a item and wants the new item => also check if item is double
-                        
+                                break
 
-                #2 - draw
-                else:
-                    print(Constants.QUEST_HERO_ITEM_DROPPED)
-            
-            elif (feedback):
-                print(Constants.QUEST_HERO_ITEM_DOUBLE)
             else:
-                #already added before
-                print(Constants.QUEST_HERO_INV_ITEM_ADDED)
+                if (hero.checkItemInInventory(new_item)):
+                    #inv not full and item in inv => draw
+                    print(Constants.QUEST_HERO_ITEM_DOUBLE)
 
+                    print(Constants.QUEST_HERO_ITEM_DROPPED)
+                    #done
+                else:
+                    #inv notfull and item not in inv => add
+                    hero.addItemToInventory(new_item)
+                    print(Constants.QUEST_HERO_INV_ITEM_ADDED)
+                    #done
             
-            #generate new random item
-            #YX = item to string
-            #message that player was rewarded with XY
-            #check if inventory of player is full
-            #check if player has item
-            #if full   => ask to replace if yes: replace no: draw => endround
-            #else endround
+            #updatestats
 
-            #UPDATE STATS
+executeQuest(quest_1, player_1)

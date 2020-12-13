@@ -49,31 +49,32 @@ class Meeple:
         self.lifepoints -= number
         return self.lifepoints
 
+    #skip moves
     def setSkipMoveTrue(self):
         self.skipMove = True
 
     def setSkipMoveFalse(self):
         self.skipMove = False
 
+    #inventory
     def addItemToInventory(self, item):
-        #return None if list is >= max_size, return item is double, return list if item was added
-        if len(self.inventory) >= Constants.HERO_INV_MAX_SIZE:
-            return None
-        if item in self.inventory:
-            return item
-        else:
-            self.inventory.append(item)
-            return self.inventory
+        self.inventory.append(item)
+        return self.inventory
         
-    def getFromInventory(self, item = None):
-        if (item is not None):
-            i = self.inventory.index(item)
-            return self.inventory[i]
-        else:
-            return self.inventory
+    def checkItemInInventory(self, item):
+        return item in self.inventory
+        
+    def getInventoryList(self):
+        return self.inventory
+    
+    def removeItem(self, item):
+        self.inventory.remove(item)
+    
+    def checkInventoryFull(self):
+        return len(self.inventory) >= Constants.HERO_INV_MAX_SIZE
 
     #remove item and insert other item
-
+    @staticmethod
     def increaseProgress(step, direction = True):
         if direction:
             Meeple.PROGRESS += step
@@ -81,6 +82,7 @@ class Meeple:
             Meeple.PROGRESS -= step
         
         return Meeple.PROGRESS
-    
+
+    @staticmethod
     def getProgress():
         return Meeple.PROGRESS
