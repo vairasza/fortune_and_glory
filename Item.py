@@ -16,3 +16,7 @@ class Item:
 
     def getName(self):
         return self.name
+    
+    @staticmethod
+    def getSizeItemList():
+        return len(Item.item_table)

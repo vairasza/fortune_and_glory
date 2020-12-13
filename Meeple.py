@@ -1,19 +1,9 @@
 import random
+import data.Constants as Constants
 
 class Meeple:
 
-    '''
-    name: argument
-    stats: lifepoints, strength, int, speed, charisma: value is randomly selecte btw 2-6
-    backpack: -> list of objects (limit - N=5)
-    bool: skip moves
-    static PROGRESS: successful moves players have made
-    '''
-
     PROGRESS = 0
-    BASIC_STAT = 4
-    BASIC_STAT_SPREAD = 2
-    INV_MAX_SIZE = 5
 
     #herotype: 0->knight, 1->wizard, 2->archer ==> different stat boni
     def __init__(self, name, hero_type=0):
@@ -28,7 +18,7 @@ class Meeple:
 
     @staticmethod
     def getRandomStat():
-        return Meeple.BASIC_STAT + random.randint( - Meeple.BASIC_STAT_SPREAD, Meeple.BASIC_STAT_SPREAD )
+        return Constants.HERO_BASIC_STAT + random.randint( - Constants.HERO_BASIC_STAT_SPREAD, Constants.HERO_BASIC_STAT_SPREAD )
 
     def __str__(self):
         item_string = ''.join([f"* {item.name} ({', '.join([f'{key}: +{val}' for key, val in item.properties.items()])})\n" for item in self.inventory])
@@ -48,11 +38,16 @@ class Meeple:
 
     def getStats(self):
         return {
+            "lifepoints": self.lifepoints,
             "strength": self.strength,
             "intellect": self.intellect,
             "speed": self.speed,
             "charisma": self.charisma
         }
+    
+    def loseLifepoints(self, number = 1):
+        self.lifepoints -= number
+        return self.lifepoints
 
     def setSkipMoveTrue(self):
         self.skipMove = True
@@ -60,9 +55,12 @@ class Meeple:
     def setSkipMoveFalse(self):
         self.skipMove = False
 
-    def addObjToInventory(self, item):
-        if len(self.inventory) == Meeple.INV_MAX_SIZE:
+    def addItemToInventory(self, item):
+        #return None if list is >= max_size, return item is double, return list if item was added
+        if len(self.inventory) >= Constants.HERO_INV_MAX_SIZE:
             return None
+        if item in self.inventory:
+            return item
         else:
             self.inventory.append(item)
             return self.inventory
@@ -76,7 +74,7 @@ class Meeple:
 
     #remove item and insert other item
 
-    def increasePROGRESS(step, direction = True):
+    def increaseProgress(step, direction = True):
         if direction:
             Meeple.PROGRESS += step
         else:
@@ -84,5 +82,5 @@ class Meeple:
         
         return Meeple.PROGRESS
     
-    def getPROGRESS():
+    def getProgress():
         return Meeple.PROGRESS
