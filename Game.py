@@ -4,19 +4,6 @@ from Meeple import Meeple
 import data.Constants as Constants
 import random
 
-#print(Constants.GAME_WELCOME)
-#input number of player
-#ask all players individually for their name and character typ
-
-quest_1 = Quest(0)
-player_1 = Meeple("Richard Löwenherz")  #get via input
-Item.loadItems()
-#player_1.addItemToInventory(Item(0))
-#player_1.addItemToInventory(Item(0))
-#player_1.addItemToInventory(Item(0))
-#player_1.addItemToInventory(Item(0))
-#player_1.addItemToInventory(Item(0))
-
 def getInput(allowedInput):
     altText = "/".join([str(key["input"]) for key in allowedInput])
 
@@ -62,16 +49,20 @@ def executeQuest(quest, hero):
         print(Constants.QUEST_SUCCESS if round_result < 0 else Constants.QUEST_FAIL)
 
         #9a. player failed quest and loses 1 lifepoint
-        #10a. check if player has more than 0 lifepoints else -> lost game
         if (round_result >= 0):
             current_lifepoints = hero.loseLifepoints()
 
+            #10a. player has  0 lifepoints -> lost game
             if (current_lifepoints <= 0):
                 print(Constants.QUEST_HERO_LIFEPOINTS_ZERO)
+                
                 return Constants.GAME_LOST
+
+            #10b. player loses 1 lifepoint
             else:
                 print(Constants.QUEST_HERO_LIFEPOINTS_LEFT.replace("XX", str(current_lifepoints)))
-                #return Constants.GAME_CONTINUE #cant return here unless we are dead!
+                
+                return Constants.GAME_CONTINUE
 
         #9b. player succeeded on the quest and get an item as reward
         #9b. check if play already has item/more than 5 and ask what item he wants remove
@@ -81,23 +72,27 @@ def executeQuest(quest, hero):
 
             print(Constants.QUEST_HERO_RECEIVED_ITEM.replace("XX", new_item.getName()).replace("YY", new_item.getStats()))
 
+            #11a invenotry is full
             if (hero.checkInventoryFull()):
                 
+                #11aa invenotry is full and item is in the inventory
                 if (hero.checkItemInInventory(new_item)):
-                    #inv full and item in inv => draw
+
                     print(Constants.QUEST_HERO_INV_FULL_1)
                     print(Constants.QUEST_HERO_ITEM_DROPPED)
+                    
+                    return Constants.GAME_CONTINUE
+
+                #11ab invenotry is full and item can be replaced
                 else:
-                    #inv full and item not in inv => replace question
                     print(Constants.QUEST_HERO_INV_FULL_2)
 
                     expectedInput = [ {"input": "ja","output": True} , {"input": "nein","output": False} ]
                     player_decision = getInput(expectedInput)
                     
+                    #11aba invenotry is full and item can be replaced; player wants to keep the item => select item to trash
                     if player_decision:
-                        #player wants to keep the item => select item to trash
-
-                        #print items with number
+                        #prints all items with a corresponding number
                         print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(player_1.getInventoryList())]))
                         
                         expectedInput = [{"input": str(i), "output": i} for i in range(1, Constants.HERO_INV_MAX_SIZE + 1)]
@@ -108,22 +103,53 @@ def executeQuest(quest, hero):
                         hero.addItemToInventory(new_item)
 
                         print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.getName()).replace("YY", new_item.getName()))
+                        
+                        return Constants.GAME_CONTINUE
 
+                    #11aba invenotry is full and item can be replaced; player wants to trash the item
                     else:
-                        #player wants to trash the item
                         print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
+                        
+                        return Constants.GAME_CONTINUE
 
+            #11b invenotry is not full and item in inv => draw
             else:
+                #11ba invenotry is not full and item in inv => draw
                 if (hero.checkItemInInventory(new_item)):
-                    #inv not full and item in inv => draw
                     print(Constants.QUEST_HERO_ITEM_DOUBLE)
 
                     print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
+                    
+                    return Constants.GAME_CONTINUE
+
+                #11bb invenotry is not full and item not in inv => added
                 else:
-                    #inv notfull and item not in inv => add
                     hero.addItemToInventory(new_item)
+                    
                     print(Constants.QUEST_HERO_INV_ITEM_ADDED.replace("XX", new_item.getName()))
+                    
+                    return Constants.GAME_CONTINUE
+
+print(Constants.GAME_WELCOME)
+#input number of player
+#ask all players individually for their name and character typ
+expectedInput = [{"input": str(i), "output": i} for i in range(Constants.MIN_PLAYERS, Constants.MAX_PLAYERS)]
+player_decision = getInput(expectedInput)
+
+while True:
+    #hero name
+    hero_name = input(Constants.QUEST_INPUT_DECISION.replace("[XX]", ""))
+    #hero type
+    expectedInput = [{"input": "1", "output": "knight"}, {"input": "2", "output": "wizard"}, {"input": "3", "output": "archer"}]
+    hero_type = getInput(expectedInput)
+
+    Meeple.addNewPlayer(hero_name, hero_type)
+
+
+
+quest_1 = Quest(0)
+player_1 = Meeple("Richard Löwenherz")  #get via input
+Item.loadItems()
+
 
 executeQuest(quest_1, player_1)
-#updatestats
-#nextround/player

@@ -6,7 +6,9 @@ HERO_BASIC_STAT_SPREAD = 2
 HERO_INV_MAX_SIZE = 5
 DICE_SIDES = 6
 
-GAME_WELCOME = "Herzlich Willkommen zu 'Fortune and Glory'!\nWie viele Spieler seid ihr?"
+GAME_WELCOME = "~ ~ ~ Herzlich Willkommen zu 'Fortune and Glory'! ~ ~ ~\nWie viele Spieler seid ihr?"
+MIN_PLAYERS = 2
+MAX_PLAYERS = 4
 
 QUEST_INPUT_DECISION = "Gib folgendes ein [XX]: "
 QUEST_SUCCESS = "Du hast die Aufgabe bestanden."

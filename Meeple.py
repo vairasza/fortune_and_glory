@@ -4,10 +4,12 @@ import data.Constants as Constants
 class Meeple:
 
     PROGRESS = 0
+    players = []
 
     #herotype: 0->knight, 1->wizard, 2->archer ==> different stat boni
-    def __init__(self, name, hero_type=0):
+    def __init__(self, name, hero_type="knight"):
         self.name = name
+        self.hero_type = hero_type
         self.lifepoints = Meeple.getRandomStat()
         self.strength = Meeple.getRandomStat()
         self.intellect = Meeple.getRandomStat()
@@ -15,6 +17,15 @@ class Meeple:
         self.charisma = Meeple.getRandomStat()
         self.inventory = []
         self.skipMove = False
+
+    @staticmethod
+    def addNewPlayer(name, hero_type):
+        Meeple.players.append(Meeple(name, hero_type))
+
+    @staticmethod
+    def reportPlayers():
+        print(Meeple.players[0])
+        print(Meeple.players[1])
 
     @staticmethod
     def getRandomStat():
