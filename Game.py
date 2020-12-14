@@ -4,15 +4,31 @@ from Meeple import Meeple
 import data.Constants as Constants
 import random
 
+#print(Constants.GAME_WELCOME)
+#input number of player
+#ask all players individually for their name and character typ
+
 quest_1 = Quest(0)
 player_1 = Meeple("Richard Löwenherz")  #get via input
 Item.loadItems()
-#test to check out replacement quest phase
-player_1.addItemToInventory(Item(0))
-player_1.addItemToInventory(Item(0))
-player_1.addItemToInventory(Item(0))
-player_1.addItemToInventory(Item(0))
-player_1.addItemToInventory(Item(0))
+#player_1.addItemToInventory(Item(0))
+#player_1.addItemToInventory(Item(0))
+#player_1.addItemToInventory(Item(0))
+#player_1.addItemToInventory(Item(0))
+#player_1.addItemToInventory(Item(0))
+
+def getInput(allowedInput):
+    altText = "/".join([str(key["input"]) for key in allowedInput])
+
+    player_decision = None
+
+    while True:
+        player_input = input(Constants.QUEST_INPUT_DECISION.replace("XX", altText))
+
+        for key in allowedInput:
+            if player_input == key["input"]:
+                player_decision = key["output"]
+                return player_decision
 
 def rollDices(number_of_dices):
     return sum([random.randint(1, Constants.DICE_SIDES) for i in range(number_of_dices)])
@@ -22,17 +38,8 @@ def executeQuest(quest, hero):
         print(quest.text_decision)
 
         #2. get input from player
-        player_decision = True
-
-        while True:
-            player_input = input(Constants.QUEST_INPUT_DECISION)
-
-            if (player_input in ["ja", "j"]):
-                player_decision = True
-                break
-            if (player_input in ["nein", "n"]):
-                player_decision = False
-                break
+        expectedInput = [ {"input": "ja","output": True} , {"input": "nein","output": False} ]
+        player_decision = getInput(expectedInput)
         
         #3. displays text depening on the players input
         print(quest.text_confirm if player_decision else quest.text_deny)
@@ -63,7 +70,7 @@ def executeQuest(quest, hero):
                 print(Constants.QUEST_HERO_LIFEPOINTS_ZERO)
                 return Constants.GAME_LOST
             else:
-                print(Constants.QUEST_HERO_LIFEPOINTS_LEFT.replace("XX", current_lifepoints))
+                print(Constants.QUEST_HERO_LIFEPOINTS_LEFT.replace("XX", str(current_lifepoints)))
                 #return Constants.GAME_CONTINUE #cant return here unless we are dead!
 
         #9b. player succeeded on the quest and get an item as reward
@@ -80,41 +87,27 @@ def executeQuest(quest, hero):
                     #inv full and item in inv => draw
                     print(Constants.QUEST_HERO_INV_FULL_1)
                     print(Constants.QUEST_HERO_ITEM_DROPPED)
-                    #done
                 else:
                     #inv full and item not in inv => replace question
                     print(Constants.QUEST_HERO_INV_FULL_2)
 
-                    player_decision = True
-
-                    while True:
-                        player_input = input(Constants.QUEST_INPUT_DECISION)
-
-                        if (player_input in ["ja", "j"]):
-                            player_decision = True
-                            break
-
-                        if (player_input in ["nein", "n"]):
-                            player_decision = False
-                            break
+                    expectedInput = [ {"input": "ja","output": True} , {"input": "nein","output": False} ]
+                    player_decision = getInput(expectedInput)
                     
-                    if not player_decision:
+                    if player_decision:
                         #player wants to keep the item => select item to trash
 
                         #print items with number
                         print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(player_1.getInventoryList())]))
+                        
+                        expectedInput = [{"input": str(i), "output": i} for i in range(1, Constants.HERO_INV_MAX_SIZE + 1)]
 
-                        while True:
-                            
-                            player_input = input(Constants.QUEST_INPUT_ITEMS.replace("XX", str([i + 1 for i in range(Constants.HERO_INV_MAX_SIZE)])))
+                        player_decision = getInput(expectedInput)
 
-                            if player_input.isnumeric() and int(player_input) > 0 and int(player_input) < Constants.HERO_INV_MAX_SIZE + 1:                               
-                                del_item = hero.removeItemById(int(player_input) - 1)
-                                hero.addItemToInventory(new_item)
+                        del_item = hero.removeItemById(player_decision - 1)
+                        hero.addItemToInventory(new_item)
 
-                                print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.getName()).replace("YY", new_item.getName()))
-
-                                break
+                        print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.getName()).replace("YY", new_item.getName()))
 
                     else:
                         #player wants to trash the item
@@ -126,14 +119,11 @@ def executeQuest(quest, hero):
                     print(Constants.QUEST_HERO_ITEM_DOUBLE)
 
                     print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
-                    #done
                 else:
                     #inv notfull and item not in inv => add
                     hero.addItemToInventory(new_item)
                     print(Constants.QUEST_HERO_INV_ITEM_ADDED.replace("XX", new_item.getName()))
-                    #done
-            
-            #updatestats
-            #nextround/player
 
 executeQuest(quest_1, player_1)
+#updatestats
+#nextround/player
