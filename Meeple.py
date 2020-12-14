@@ -66,6 +66,11 @@ class Meeple:
         
     def getInventoryList(self):
         return self.inventory
+
+    def removeItemById(self, id):
+        del_item = self.inventory[id]
+        self.inventory.remove(del_item)
+        return del_item
     
     def removeItem(self, item):
         self.inventory.remove(item)

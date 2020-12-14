@@ -7,6 +7,12 @@ import random
 quest_1 = Quest(0)
 player_1 = Meeple("Richard Löwenherz")  #get via input
 Item.loadItems()
+#test to check out replacement quest phase
+player_1.addItemToInventory(Item(0))
+player_1.addItemToInventory(Item(0))
+player_1.addItemToInventory(Item(0))
+player_1.addItemToInventory(Item(0))
+player_1.addItemToInventory(Item(0))
 
 def rollDices(number_of_dices):
     return sum([random.randint(1, Constants.DICE_SIDES) for i in range(number_of_dices)])
@@ -63,7 +69,6 @@ def executeQuest(quest, hero):
         #9b. player succeeded on the quest and get an item as reward
         #9b. check if play already has item/more than 5 and ask what item he wants remove
         else:
-            print(Item.getSizeItemList())
             rnd_id = random.randint(0, Item.getSizeItemList() - 1)
             new_item = Item(rnd_id)
 
@@ -88,39 +93,47 @@ def executeQuest(quest, hero):
                         if (player_input in ["ja", "j"]):
                             player_decision = True
                             break
+
                         if (player_input in ["nein", "n"]):
                             player_decision = False
                             break
                     
-                    if player_decision:
-                    #len_inv = hero.getInventoryCurrentSize()
+                    if not player_decision:
+                        #player wants to keep the item => select item to trash
 
-                    print(" | ".join([f"{i + 1} - {val}" for i, val in range(len_inv )]))
+                        #print items with number
+                        print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(player_1.getInventoryList())]))
 
-                        while True:  
-                            player_input = input(Constants.QUEST_INPUT_ITEMS.replace("XX", str([i + 1 for i in range(len_inv)])))
+                        while True:
+                            
+                            player_input = input(Constants.QUEST_INPUT_ITEMS.replace("XX", str([i + 1 for i in range(Constants.HERO_INV_MAX_SIZE)])))
 
-                            if player_input.isnumeric() and player_input > 0 and player_input < len_inv + 2:
-                                del_item = hero.getItemById(int(player_input))
-
+                            if player_input.isnumeric() and int(player_input) > 0 and int(player_input) < Constants.HERO_INV_MAX_SIZE + 1:                               
+                                del_item = hero.removeItemById(int(player_input) - 1)
                                 hero.addItemToInventory(new_item)
-                                print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.name).replace("YY", new_item.getName()))
+
+                                print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.getName()).replace("YY", new_item.getName()))
 
                                 break
+
+                    else:
+                        #player wants to trash the item
+                        print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
 
             else:
                 if (hero.checkItemInInventory(new_item)):
                     #inv not full and item in inv => draw
                     print(Constants.QUEST_HERO_ITEM_DOUBLE)
 
-                    print(Constants.QUEST_HERO_ITEM_DROPPED)
+                    print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
                     #done
                 else:
                     #inv notfull and item not in inv => add
                     hero.addItemToInventory(new_item)
-                    print(Constants.QUEST_HERO_INV_ITEM_ADDED)
+                    print(Constants.QUEST_HERO_INV_ITEM_ADDED.replace("XX", new_item.getName()))
                     #done
             
             #updatestats
+            #nextround/player
 
 executeQuest(quest_1, player_1)
