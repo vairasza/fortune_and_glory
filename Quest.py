@@ -1,5 +1,6 @@
 import json
 import data.Constants as Constants
+import random
 
 class Quest:
 
@@ -14,3 +15,11 @@ class Quest:
     @staticmethod
     def loadQuests():
         Quest.quest_table = json.load(open(Constants.FN_QUEST_DATA))
+        Quest.length = len(Quest.quest_table)
+    
+    #remove quest from list so we dont get the same quest over and over again
+    @staticmethod
+    def getQuest():
+        rnd_quest = random.choice(Quest.quest_table)
+        Quest.quest_table.remove(rnd_quest)
+        return rnd_quest

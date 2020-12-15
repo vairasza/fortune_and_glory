@@ -130,26 +130,45 @@ def executeQuest(quest, hero):
                     
                     return Constants.GAME_CONTINUE
 
+#Game Starts Here
+Item.loadItems()
+
 print(Constants.GAME_WELCOME)
 #input number of player
-#ask all players individually for their name and character typ
-expectedInput = [{"input": str(i), "output": i} for i in range(Constants.MIN_PLAYERS, Constants.MAX_PLAYERS)]
-player_decision = getInput(expectedInput)
+expectedInput = [{"input": str(i), "output": i} for i in range(Constants.MIN_PLAYERS, Constants.MAX_PLAYERS + 1)]
+player_number = getInput(expectedInput)
 
-while True:
+#ask all players individually for their name and character typ
+for i in range(player_number):
+    print(f"player {i + 1}: please make some customisations")
+    print("tell us your heros name")
     #hero name
     hero_name = input(Constants.QUEST_INPUT_DECISION.replace("[XX]", ""))
     #hero type
+    print("knight, wizard, archer --> state benefites")
     expectedInput = [{"input": "1", "output": "knight"}, {"input": "2", "output": "wizard"}, {"input": "3", "output": "archer"}]
     hero_type = getInput(expectedInput)
 
     Meeple.addNewPlayer(hero_name, hero_type)
 
 
+#loop rounds
+print(f"Runde {Meeple.rounds} beginnt:")
 
-quest_1 = Quest(0)
-player_1 = Meeple("Richard Löwenherz")  #get via input
-Item.loadItems()
+while True:
+    #loop players
+    rnd_quest = Quest.getQuest() # => 4 players * 5 fields => 20 quests
+    next_player = Meeple.nextPlayer()
+
+    result = executeQuest(rnd_quest, next_player)
+
+    if result:
+        #update stats
+    else:
+        print("you lost the game and cant play anymore")
+        #remove from players
+        #if len(players) == 0 => end game for all show results
 
 
-executeQuest(quest_1, player_1)
+Meeple.rounds +=1
+#reset players played round

@@ -3,7 +3,7 @@ import data.Constants as Constants
 
 class Meeple:
 
-    PROGRESS = 0
+    rounds = 1
     players = []
 
     #herotype: 0->knight, 1->wizard, 2->archer ==> different stat boni
@@ -17,15 +17,19 @@ class Meeple:
         self.charisma = Meeple.getRandomStat()
         self.inventory = []
         self.skipMove = False
+        self.progress = 0
+        self.roundPlayed = False
 
     @staticmethod
     def addNewPlayer(name, hero_type):
         Meeple.players.append(Meeple(name, hero_type))
 
     @staticmethod
-    def reportPlayers():
-        print(Meeple.players[0])
-        print(Meeple.players[1])
+    def nextPlayer():
+        for i in Meeple.players:
+            if i.roundPlayed is False:
+                i.roundPlayed = True
+                return i
 
     @staticmethod
     def getRandomStat():
@@ -35,7 +39,7 @@ class Meeple:
         item_string = ''.join([f"* {item.name} ({', '.join([f'{key}: +{val}' for key, val in item.properties.items()])})\n" for item in self.inventory])
 
         return f"Name: {self.name}\n"\
-            f"Schritte zum Erfolg: {Meeple.PROGRESS}\n"\
+            f"Schritte zum Erfolg: {self.progress}\n"\
             f"Lebenspunkte: {self.lifepoints}\n"\
             f"Stärkepunkte: {self.strength}\n"\
             f"Intelligenz: {self.intellect}\n"\
@@ -61,11 +65,8 @@ class Meeple:
         return self.lifepoints
 
     #skip moves
-    def setSkipMoveTrue(self):
-        self.skipMove = True
-
-    def setSkipMoveFalse(self):
-        self.skipMove = False
+    def setSkipMove(self, rounds):
+        self.skipMove = rounds
 
     #inventory
     def addItemToInventory(self, item):
@@ -88,17 +89,3 @@ class Meeple:
     
     def checkInventoryFull(self):
         return len(self.inventory) >= Constants.HERO_INV_MAX_SIZE
-
-    #remove item and insert other item
-    @staticmethod
-    def increaseProgress(step, direction = True):
-        if direction:
-            Meeple.PROGRESS += step
-        else:
-            Meeple.PROGRESS -= step
-        
-        return Meeple.PROGRESS
-
-    @staticmethod
-    def getProgress():
-        return Meeple.PROGRESS
