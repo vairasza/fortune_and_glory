@@ -1,0 +1,41 @@
+[
+    {
+        "hero_type": "knight",
+        "description": "-describe what an knight does // flavor test-",
+        "ability": {
+            "description": "If you succeed in a strength category and roll 4 or higher, heal for 1 lifepoint.",
+            "action": 101
+        },
+        "armory": {
+            
+        },
+        "stats": {
+            "strength": 2,
+            "speed": -1
+        }
+    },
+    {
+        "hero_type": "wizard",
+        "description": "-describe what an wizard does // flavor test-",
+        "ability": {
+            "description": "If you succeed on a quest and roll 5 or higher, you can accept another quest in this round.",
+            "action": 102
+        },
+        "stats": {
+            "intellect": 2,
+            "lifepoints": -1
+        }
+    },
+    {
+        "hero_type": "archer",
+        "description": "-describe what an archer does // flavor test-",
+        "ability": {
+            "description": "Can pass a lock if rolling 4 or higher.",
+            "action": 103
+        },
+        "stats": {
+            "agility": 1,
+            "speed": 1
+        }
+    }
+]

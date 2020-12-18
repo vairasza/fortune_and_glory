@@ -3,6 +3,7 @@ from Item import Item
 from Meeple import Meeple
 import data.Constants as Constants
 import random
+#import pygame
 
 def getInput(allowedInput):
     altText = "/".join([str(key["input"]) for key in allowedInput])
@@ -153,22 +154,30 @@ for i in range(player_number):
 
 
 #loop rounds
-print(f"Runde {Meeple.rounds} beginnt:")
-
 while True:
-    #loop players
-    rnd_quest = Quest.getQuest() # => 4 players * 5 fields => 20 quests
-    next_player = Meeple.nextPlayer()
+    print(f"Runde {Meeple.rounds} beginnt:")
 
-    result = executeQuest(rnd_quest, next_player)
+    while True:
+        #loop players
+        rnd_quest = Quest.getQuest() # => 4 players * 5 fields => 20 quests
+        next_player = Meeple.nextPlayer()
 
-    if result:
-        #update stats
-    else:
-        print("you lost the game and cant play anymore")
-        #remove from players
-        #if len(players) == 0 => end game for all show results
+        result = executeQuest(rnd_quest, next_player)
+
+        if result:
+            #update stats => update in executeQuest
+            print(1)
+        else:
+            print("you lost the game and cant play anymore")
+
+            #remove from players
+            #if len(players) == 0 => end game for all show results
 
 
-Meeple.rounds +=1
-#reset players played round
+        Meeple.rounds +=1
+
+    #check if players dead or wincondition
+    if len(Meeple.players) == 0:
+        return Constants.GAME_LOST_FOR_ALL
+    #reset players played round
+
