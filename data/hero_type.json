@@ -1,38 +1,35 @@
 [
     {
-        "hero_type": "knight",
+        "hero_type": "Knight",
         "description": "-describe what an knight does // flavor test-",
         "ability": {
-            "description": "If you succeed in a strength category and roll 4 or higher, heal for 1 lifepoint.",
-            "action": 101
+            "description": "If you succeed in a strength category and roll 4 or higher, heal for 1 lifepoint."
         },
-        "armory": {
-            
-        },
+        "armory": ["Sword", "Shield", "Plate Helmet", "Plate Armor"],
         "stats": {
             "strength": 2,
             "speed": -1
         }
     },
     {
-        "hero_type": "wizard",
+        "hero_type": "Wizard",
         "description": "-describe what an wizard does // flavor test-",
         "ability": {
-            "description": "If you succeed on a quest and roll 5 or higher, you can accept another quest in this round.",
-            "action": 102
+            "description": "If you succeed on a quest and roll 5 or higher, you can accept another quest in this round."
         },
+        "armory": ["Magic Wand", "Grimoire", "Cloth Hat", "Cloth Robe"],
         "stats": {
             "intellect": 2,
             "lifepoints": -1
         }
     },
     {
-        "hero_type": "archer",
+        "hero_type": "Archer",
         "description": "-describe what an archer does // flavor test-",
         "ability": {
-            "description": "Can pass a lock if rolling 4 or higher.",
-            "action": 103
+            "description": "Can pass a lock if rolling 4 or higher."
         },
+        "armory": ["Bow", "Quiver", "Leather Mask", "Leather Garment"],
         "stats": {
             "agility": 1,
             "speed": 1
