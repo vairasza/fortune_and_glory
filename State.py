@@ -90,24 +90,21 @@ while not quit:
     screen.blit(background, (0, 0))
     draw_rect(x,y)
 
-    row = 5
-    col = 5
+    row = 49
+    x_start = screen.get_width() + 50
+    y_start = -50
+    x_step = 33
+    y_step = 17
+    x_move = x_step * 2
 
-    for i in range(row):
-        x_1 = 33
-        y_1 = 17
-        x_0 = 700 - x_1 * i#screen.get_width() - x_1 * i
-        y_0 = 0 + y_1 * i#0 + y_1 * i
-        blocks = 1 + i * 2
-    
-        for j in range(blocks):
-            draw_blocks(x_0 + j * x_1, y_0 + j * y_1, 'blocks_1.png')
-
+    for j in range(row):
+        blocks = j * 2
+        for i in range (blocks):
+            draw_blocks(x_start + i * x_step - j * x_move, y_start + i * y_step, 'blocks_1.png')
 
     x += x_f
     y += y_f
     move_linux(x, y)
-    
 
     pygame.display.update()
     clock.tick(60)
