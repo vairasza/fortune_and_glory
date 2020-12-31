@@ -27,9 +27,17 @@ class Meeple:
     @staticmethod
     def nextPlayer():
         for i in Meeple.players:
-            if i.roundPlayed is False:
-                i.roundPlayed = True
+            if not i.roundPlayed:
                 return i
+    
+    @staticmethod
+    def removePlayer(player):
+        Meeple.players.remove(player)
+    
+    @staticmethod
+    def resetRoundPlayed():
+        for player in Meeple.players:
+            player.roundPlayed = False
 
     @staticmethod
     def getRandomStat():
@@ -89,3 +97,28 @@ class Meeple:
     
     def checkInventoryFull(self):
         return len(self.inventory) >= Constants.HERO_INV_MAX_SIZE
+
+    def setRoundPlayed(self):
+        self.roundPlayed = True
+
+    def updateStats(self):
+        print(1)
+
+    def checkSkipMove(self):
+        print(1)
+
+    def freeSkipMoves(self):
+        print(1)
+
+    #move to inherited archer class
+    def archer_talent_roll(self):
+        #check herotype
+        return random.randint(1, Constants.DICE_SIDES) >= 4
+
+    def wizard_talent_roll(self):
+        #check herotype
+        return random.randint(1, Constants.DICE_SIDES) >= 5
+    
+    def knight_talent_roll(self):
+        #check herotype
+        return random.randint(1, Constants.DICE_SIDES) >= 4

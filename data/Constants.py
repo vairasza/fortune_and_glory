@@ -27,3 +27,6 @@ QUEST_HERO_ITEM_REPLACE = "XX wurde durch YY in deinem Inventar ersetzt."
 
 GAME_LOST = 0
 GAME_CONTINUE = 1
+GAME_LOST_FOR_ALL = "Habt alle verloren"
+GAME_PLAYER_LOST = "Du hast keine Lebenspunkte mehr und kannst nicht mehr mitspielen."
+GAME_PLAYER_SKIP_MOVE = "Du musst diese Runde aussetzen."

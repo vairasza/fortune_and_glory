@@ -3,7 +3,6 @@ from Item import Item
 from Meeple import Meeple
 import data.Constants as Constants
 import random
-#import pygame
 
 def getInput(allowedInput):
     altText = "/".join([str(key["input"]) for key in allowedInput])
@@ -51,6 +50,9 @@ def executeQuest(quest, hero):
 
         #9a. player failed quest and loses 1 lifepoint
         if (round_result >= 0):
+            current_lifepoints = 0
+            if hero.knight_talent_roll():
+                
             current_lifepoints = hero.loseLifepoints()
 
             #10a. player has  0 lifepoints -> lost game
@@ -94,7 +96,7 @@ def executeQuest(quest, hero):
                     #11aba invenotry is full and item can be replaced; player wants to keep the item => select item to trash
                     if player_decision:
                         #prints all items with a corresponding number
-                        print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(player_1.getInventoryList())]))
+                        print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(hero.getInventoryList())]))
                         
                         expectedInput = [{"input": str(i), "output": i} for i in range(1, Constants.HERO_INV_MAX_SIZE + 1)]
 
@@ -152,9 +154,10 @@ for i in range(player_number):
 
     Meeple.addNewPlayer(hero_name, hero_type)
 
+game_running = True
 
 #loop rounds
-while True:
+while game_running:
     print(f"Runde {Meeple.rounds} beginnt:")
 
     while True:
@@ -162,22 +165,33 @@ while True:
         rnd_quest = Quest.getQuest() # => 4 players * 5 fields => 20 quests
         next_player = Meeple.nextPlayer()
 
-        result = executeQuest(rnd_quest, next_player)
+        if next_player.checkSkipMove() or next_player.archer_talent_roll():
+            result = executeQuest(rnd_quest, next_player)
 
-        if result:
-            #update stats => update in executeQuest
-            print(1)
+            if result:
+                next_player.updateStats()
+                
+                if next_player.wizard_talent_roll():
+                    rnd_quest = Quest.getQuest()
+                    result = executeQuest(rnd_quest, next_player)
+
+                    if result:
+                        next_player.updateStats()
+                    else:
+                        Meeple.removePlayer(next_player)
+                        print(Constants.GAME_PLAYER_LOST)
+
+            else:
+                Meeple.removePlayer(next_player)
+                print(Constants.GAME_PLAYER_LOST)
         else:
-            print("you lost the game and cant play anymore")
+            next_player.freeSkipMoves()
+            print(Constants.GAME_PLAYER_SKIP_MOVE)
 
-            #remove from players
-            #if len(players) == 0 => end game for all show results
-
-
-        Meeple.rounds +=1
+    Meeple.rounds +=1
+    Meeple.resetRoundPlayed()
 
     #check if players dead or wincondition
     if len(Meeple.players) == 0:
-        return Constants.GAME_LOST_FOR_ALL
-    #reset players played round
-
+        game_running = False
+        print(Constants.GAME_LOST_FOR_ALL)

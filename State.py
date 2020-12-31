@@ -90,7 +90,7 @@ while not quit:
     screen.blit(background, (0, 0))
     draw_rect(x,y)
 
-    row = 49
+    row = 4 
     x_start = screen.get_width() + 50
     y_start = -50
     x_step = 33

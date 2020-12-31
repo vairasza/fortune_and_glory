@@ -3,7 +3,7 @@
         "hero_type": "Knight",
         "description": "-describe what an knight does // flavor test-",
         "ability": {
-            "description": "If you succeed in a strength category and roll 4 or higher, heal for 1 lifepoint."
+            "description": "If you fail on a quest and roll 5 or higher, heal for 1 lifepoint instead of losing 1 lifepoint."
         },
         "armory": ["Sword", "Shield", "Plate Helmet", "Plate Armor"],
         "stats": {
