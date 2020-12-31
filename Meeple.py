@@ -7,7 +7,7 @@ class Meeple:
     players = []
 
     #herotype: 0->knight, 1->wizard, 2->archer ==> different stat boni
-    def __init__(self, name, hero_type="knight"):
+    def __init__(self, name, hero_type):
         self.name = name
         self.hero_type = hero_type
         self.lifepoints = Meeple.getRandomStat()
@@ -29,6 +29,7 @@ class Meeple:
         for i in Meeple.players:
             if not i.roundPlayed:
                 return i
+        return None
     
     @staticmethod
     def removePlayer(player):
@@ -71,6 +72,10 @@ class Meeple:
     def loseLifepoints(self, number = 1):
         self.lifepoints -= number
         return self.lifepoints
+    
+    def getLifepoints(self, number = 1):
+        self.lifepoints += number
+        return self.lifepoints
 
     #skip moves
     def setSkipMove(self, rounds):
@@ -112,13 +117,28 @@ class Meeple:
 
     #move to inherited archer class
     def archer_talent_roll(self):
-        #check herotype
-        return random.randint(1, Constants.DICE_SIDES) >= 4
+        if self.hero_type == Constants.HERO_TYPE_ARCHER:
+
+            if random.randint(1, Constants.DICE_SIDES) >= 4:
+                print(Constants.GAME_ARCHER_QUEST_PROC)
+                return True
+
+        return False
 
     def wizard_talent_roll(self):
-        #check herotype
-        return random.randint(1, Constants.DICE_SIDES) >= 5
+        if self.hero_type == Constants.HERO_TYPE_WIZARD:
+
+            if random.randint(1, Constants.DICE_SIDES) >= 5:
+                print(Constants.GAME_WIZARD_QUEST_PROC)
+                return True
+
+        return False
     
     def knight_talent_roll(self):
-        #check herotype
-        return random.randint(1, Constants.DICE_SIDES) >= 4
+       if self.hero_type == Constants.HERO_TYPE_KNIGHT:
+
+            if random.randint(1, Constants.DICE_SIDES) >= 5:
+                print(Constants.GAME_KNIGHT_QUEST_PROC)
+                return True
+
+        return False

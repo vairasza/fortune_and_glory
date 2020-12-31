@@ -50,10 +50,8 @@ def executeQuest(quest, hero):
 
         #9a. player failed quest and loses 1 lifepoint
         if (round_result >= 0):
-            current_lifepoints = 0
-            if hero.knight_talent_roll():
                 
-            current_lifepoints = hero.loseLifepoints()
+            current_lifepoints = hero.getLifepoints() if hero.knight_talent_roll() else hero.loseLifepoints()
 
             #10a. player has  0 lifepoints -> lost game
             if (current_lifepoints <= 0):
@@ -135,6 +133,7 @@ def executeQuest(quest, hero):
 
 #Game Starts Here
 Item.loadItems()
+Quest.loadQuests()
 
 print(Constants.GAME_WELCOME)
 #input number of player
@@ -143,33 +142,44 @@ player_number = getInput(expectedInput)
 
 #ask all players individually for their name and character typ
 for i in range(player_number):
-    print(f"player {i + 1}: please make some customisations")
-    print("tell us your heros name")
+    print(Constants.GAME_CHOOSE_NUM_PLAYERS.replace("XX", str(i + 1)))
+    print(Constants.GAME_HERO_NAME_CHOOSE)
     #hero name
-    hero_name = input(Constants.QUEST_INPUT_DECISION.replace("[XX]", ""))
+    hero_name = input(Constants.QUEST_INPUT_DECISION.replace("XX", "name"))
     #hero type
-    print("knight, wizard, archer --> state benefites")
+    print(Constants.GAME_HERO_TYPE_CHOOSE)
     expectedInput = [{"input": "1", "output": "knight"}, {"input": "2", "output": "wizard"}, {"input": "3", "output": "archer"}]
     hero_type = getInput(expectedInput)
 
     Meeple.addNewPlayer(hero_name, hero_type)
 
+#sum up all players and stats etc
+#check if all quests/items loaded
+
 game_running = True
 
 #loop rounds
 while game_running:
-    print(f"Runde {Meeple.rounds} beginnt:")
+    print(Constants.GAME_NEW_ROUND_START.replace("XX", str(Meeple.rounds)))
 
+    #loop players
     while True:
-        #loop players
-        rnd_quest = Quest.getQuest() # => 4 players * 5 fields => 20 quests
         next_player = Meeple.nextPlayer()
 
+        #end round if all players have played this round
+        if next_player is None:
+            break
+
+        rnd_quest = Quest.getQuest()
+        print(Constants.GAME_PLAYER_GO.replace("XX", next_player.name))
+
         if next_player.checkSkipMove() or next_player.archer_talent_roll():
+            
             result = executeQuest(rnd_quest, next_player)
 
             if result:
                 next_player.updateStats()
+                print(Constants.GAME_PLAYER_STAT_CHANGE)
                 
                 if next_player.wizard_talent_roll():
                     rnd_quest = Quest.getQuest()
@@ -177,6 +187,7 @@ while game_running:
 
                     if result:
                         next_player.updateStats()
+                        print(Constants.GAME_PLAYER_STAT_CHANGE)
                     else:
                         Meeple.removePlayer(next_player)
                         print(Constants.GAME_PLAYER_LOST)
@@ -187,6 +198,8 @@ while game_running:
         else:
             next_player.freeSkipMoves()
             print(Constants.GAME_PLAYER_SKIP_MOVE)
+        
+        next_player.setRoundPlayed()
 
     Meeple.rounds +=1
     Meeple.resetRoundPlayed()
