@@ -140,6 +140,9 @@ class Meeple:
                 return True
 
         return False
+
+    def playerWinsGame(self):
+        print(1)
     
     @staticmethod
     def addNewPlayer(name, hero_type):
@@ -158,6 +161,7 @@ class Meeple:
     
     @staticmethod
     def resetRoundPlayed():
+        Meeple.rounds +=1
         for player in Meeple.players:
             player.roundPlayed = False
 

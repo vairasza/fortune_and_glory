@@ -73,6 +73,9 @@ QUEST_HERO_ITEM_REPLACE = "XX wurde durch YY in deinem Inventar ersetzt."
 
 GAME_LOST = 0
 GAME_CONTINUE = 1
+GAME_NO_QUEST = 2
+GAME_ALL_PLAYED = 3
+GAME_WON = 4
 GAME_LOST_FOR_ALL = "\n~ ~ ~ Spiel vorbei! Ihr habt alle verloren! ~ ~ ~"
 GAME_PLAYER_GO = "\n~ ~ ~ XX ist an der Reihe! ~ ~ ~"
 GAME_PLAYER_LOST = "Du hast keine Lebenspunkte mehr und kannst nicht mehr mitspielen."
@@ -85,4 +88,6 @@ GAME_HERO_TYPE_CHOOSE = "\nWelchen Heldentypen möchstest du spielen?"
 GAME_HERO_TYPE_CHOOSE_K = f"1) {HERO_TYPE_KNIGHT_LOC}:\n\tTalent -> {KNIGHT_TALENT_DESC}\n\tZusätzliche Werte -> {KNIGHT_STATS}\n"
 GAME_HERO_TYPE_CHOOSE_W = f"2) {HERO_TYPE_WIZARD_LOC}:\n\tTalent -> {WIZARD_TALENT_DESC}\n\tZusätzliche Werte -> {WIZARD_STATS}\n"
 GAME_HERO_TYPE_CHOOSE_A = f"3) {HERO_TYPE_ARCHER_LOC}:\n\tTalent -> {ARCHER_TALENT_DESC}\n\tZusätzliche Werte -> {ARCHER_STATS}"
-GAME_ROUND_OVER = "~ ~ ~ Der Zug von XX ist nun zu Ende! ~ ~ ~\n"
+GAME_ROUND_OVER = "~ ~ ~ Der Zug von XX ist nun zu Ende! ~ ~ ~"
+GAME_REQ_LAST_QUEST = 5
+GAME_PLAYER_WINS = "~ ~ ~ Spieler XX hat das Spiel gewonnen! ~ ~ ~"

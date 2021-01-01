@@ -5,6 +5,7 @@ import random
 class Quest:
 
     quest_table = []
+    lastQuest = None
 
     def __init__(self, quest_obj):
         self.quest_id = quest_obj["quest_id"]
@@ -25,7 +26,8 @@ class Quest:
     def loadQuests():
         quest_list = json.load(open(Constants.FN_QUEST_DATA))
 
-        Quest.quest_table = [Quest(quest) for quest in quest_list]
+        Quest.quest_table = [Quest(quest) for quest in quest_list if quest["quest_type"] != 1]
+        Quest.lastQuest = [LastQuest(quest) for quest in quest_list if quest["quest_type"] == 1][0]
         
         #sort by difficulty so we get the easy quests first
         random.shuffle(Quest.quest_table)
@@ -35,4 +37,14 @@ class Quest:
     #remove quest from list so we dont get the same quest over and over again
     @staticmethod
     def getQuest():
-        return Quest.quest_table.pop(0)
+        if len(Quest.quest_table) > 0:
+            return Quest.quest_table.pop(0)
+
+class LastQuest():
+
+    def __init__(self, quest_obj):
+        self.quest_id = quest_obj["quest_id"]
+        self.quest_type = quest_obj["quest_type"]
+        self.text_quest_text = quest_obj["text_quest_text"]
+        self.quest_category = quest_obj["quest_category"]
+        self.quest_price = quest_obj["quest_price"]
