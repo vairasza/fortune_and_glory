@@ -13,36 +13,13 @@ class Meeple:
         self.lifepoints = Meeple.getRandomStat()
         self.strength = Meeple.getRandomStat()
         self.intellect = Meeple.getRandomStat()
+        self.agility = Meeple.getRandomStat()
         self.speed = Meeple.getRandomStat()
         self.charisma = Meeple.getRandomStat()
         self.inventory = []
         self.skipMove = False
         self.progress = 0
         self.roundPlayed = False
-
-    @staticmethod
-    def addNewPlayer(name, hero_type):
-        Meeple.players.append(Meeple(name, hero_type))
-
-    @staticmethod
-    def nextPlayer():
-        for i in Meeple.players:
-            if not i.roundPlayed:
-                return i
-        return None
-    
-    @staticmethod
-    def removePlayer(player):
-        Meeple.players.remove(player)
-    
-    @staticmethod
-    def resetRoundPlayed():
-        for player in Meeple.players:
-            player.roundPlayed = False
-
-    @staticmethod
-    def getRandomStat():
-        return Constants.HERO_BASIC_STAT + random.randint( - Constants.HERO_BASIC_STAT_SPREAD, Constants.HERO_BASIC_STAT_SPREAD )
 
     def __str__(self):
         item_string = ''.join([f"* {item.name} ({', '.join([f'{key}: +{val}' for key, val in item.properties.items()])})\n" for item in self.inventory])
@@ -71,10 +48,6 @@ class Meeple:
     
     def loseLifepoints(self, number = 1):
         self.lifepoints -= number
-        return self.lifepoints
-    
-    def getLifepoints(self, number = 1):
-        self.lifepoints += number
         return self.lifepoints
 
     #skip moves
@@ -107,38 +80,65 @@ class Meeple:
         self.roundPlayed = True
 
     def updateStats(self):
-        print(1)
+        print(1)#TODO
 
     def checkSkipMove(self):
-        print(1)
+        return not self.skipMove
 
     def freeSkipMoves(self):
-        print(1)
+        self.skipMove = False
 
     #move to inherited archer class
     def archer_talent_roll(self):
         if self.hero_type == Constants.HERO_TYPE_ARCHER:
+            print(Constants.ARCHER_TALENT_USE)
 
-            if random.randint(1, Constants.DICE_SIDES) >= 4:
-                print(Constants.GAME_ARCHER_QUEST_PROC)
+            if random.randint(1, Constants.DICE_SIDES) >= Constants.ARCHER_TALENT_REQ:
+                print(Constants.ARCHER_TALENT_PROC)
                 return True
 
         return False
 
     def wizard_talent_roll(self):
         if self.hero_type == Constants.HERO_TYPE_WIZARD:
+            print(Constants.WIZARD_TALENT_USE)
 
-            if random.randint(1, Constants.DICE_SIDES) >= 5:
-                print(Constants.GAME_WIZARD_QUEST_PROC)
+            if random.randint(1, Constants.DICE_SIDES) >= Constants.WIZARD_TALENT_REQ:
+                print(Constants.WIZARD_TALENT_PROC)
                 return True
 
         return False
     
     def knight_talent_roll(self):
-       if self.hero_type == Constants.HERO_TYPE_KNIGHT:
+        if self.hero_type == Constants.HERO_TYPE_KNIGHT:
+            print(Constants.KNIGHT_TALENT_USE)
 
-            if random.randint(1, Constants.DICE_SIDES) >= 5:
-                print(Constants.GAME_KNIGHT_QUEST_PROC)
+            if random.randint(1, Constants.DICE_SIDES) >= Constants.KNIGHT_TALENT_REQ:
+                print(Constants.KNIGHT_TALENT_PROC)
                 return True
 
         return False
+    
+    @staticmethod
+    def addNewPlayer(name, hero_type):
+        Meeple.players.append(Meeple(name, hero_type))
+
+    @staticmethod
+    def nextPlayer():
+        for i in Meeple.players:
+            if not i.roundPlayed:
+                return i
+        return None
+    
+    @staticmethod
+    def removePlayer(player):
+        Meeple.players.remove(player)
+    
+    @staticmethod
+    def resetRoundPlayed():
+        for player in Meeple.players:
+            player.roundPlayed = False
+
+    @staticmethod
+    def getRandomStat():
+        return Constants.HERO_BASIC_STAT + random.randint( - Constants.HERO_BASIC_STAT_SPREAD, Constants.HERO_BASIC_STAT_SPREAD )

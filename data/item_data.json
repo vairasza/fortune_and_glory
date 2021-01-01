@@ -1,6 +1,7 @@
 [
     {
-        "id": 0,
+        "item_id": 0,
+        "rarity": 10,
         "name": "Schwert des geachteten Edelmanns",
         "properties": {
             "strength": 2,
@@ -8,7 +9,8 @@
         }
     },
     {
-        "id": 1,
+        "item_id": 1,
+        "rarity": 10,
         "name": "Schild des Löwen",
         "properties": {
             "lifepoints": 2,
@@ -16,7 +18,8 @@
         }
     },
     {
-        "id": 2,
+        "item_id": 2,
+        "rarity": 10,
         "name": "Goldene Rüstung des einsamen Ritters",
         "properties": {
             "lifepoints": 3

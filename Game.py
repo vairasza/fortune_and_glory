@@ -51,7 +51,7 @@ def executeQuest(quest, hero):
         #9a. player failed quest and loses 1 lifepoint
         if (round_result >= 0):
                 
-            current_lifepoints = hero.getLifepoints() if hero.knight_talent_roll() else hero.loseLifepoints()
+            current_lifepoints = hero.lifepoints if hero.knight_talent_roll() else hero.loseLifepoints()
 
             #10a. player has  0 lifepoints -> lost game
             if (current_lifepoints <= 0):
@@ -68,10 +68,9 @@ def executeQuest(quest, hero):
         #9b. player succeeded on the quest and get an item as reward
         #9b. check if play already has item/more than 5 and ask what item he wants remove
         else:
-            rnd_id = random.randint(0, Item.getSizeItemList() - 1)
-            new_item = Item(rnd_id)
+            new_item = Item.rewardItem()
 
-            print(Constants.QUEST_HERO_RECEIVED_ITEM.replace("XX", new_item.getName()).replace("YY", new_item.getStats()))
+            print(Constants.QUEST_HERO_RECEIVED_ITEM.replace("XX", new_item.name).replace("YY", new_item.getStats()))
 
             #11a invenotry is full
             if (hero.checkInventoryFull()):
@@ -94,7 +93,7 @@ def executeQuest(quest, hero):
                     #11aba invenotry is full and item can be replaced; player wants to keep the item => select item to trash
                     if player_decision:
                         #prints all items with a corresponding number
-                        print(", ".join([f"{i + 1} - {j.getName()}" for i, j in enumerate(hero.getInventoryList())]))
+                        print(", ".join([f"{i + 1} - {j.name}" for i, j in enumerate(hero.getInventoryList())]))
                         
                         expectedInput = [{"input": str(i), "output": i} for i in range(1, Constants.HERO_INV_MAX_SIZE + 1)]
 
@@ -103,13 +102,13 @@ def executeQuest(quest, hero):
                         del_item = hero.removeItemById(player_decision - 1)
                         hero.addItemToInventory(new_item)
 
-                        print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.getName()).replace("YY", new_item.getName()))
+                        print(Constants.QUEST_HERO_ITEM_REPLACE.replace("XX", del_item.name).replace("YY", new_item.name))
                         
                         return Constants.GAME_CONTINUE
 
                     #11aba invenotry is full and item can be replaced; player wants to trash the item
                     else:
-                        print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
+                        print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.name))
                         
                         return Constants.GAME_CONTINUE
 
@@ -119,7 +118,7 @@ def executeQuest(quest, hero):
                 if (hero.checkItemInInventory(new_item)):
                     print(Constants.QUEST_HERO_ITEM_DOUBLE)
 
-                    print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.getName()))
+                    print(Constants.QUEST_HERO_ITEM_DROPPED.replace("XX", new_item.name))
                     
                     return Constants.GAME_CONTINUE
 
@@ -127,7 +126,7 @@ def executeQuest(quest, hero):
                 else:
                     hero.addItemToInventory(new_item)
                     
-                    print(Constants.QUEST_HERO_INV_ITEM_ADDED.replace("XX", new_item.getName()))
+                    print(Constants.QUEST_HERO_INV_ITEM_ADDED.replace("XX", new_item.name))
                     
                     return Constants.GAME_CONTINUE
 
@@ -148,13 +147,21 @@ for i in range(player_number):
     hero_name = input(Constants.QUEST_INPUT_DECISION.replace("XX", "name"))
     #hero type
     print(Constants.GAME_HERO_TYPE_CHOOSE)
-    expectedInput = [{"input": "1", "output": "knight"}, {"input": "2", "output": "wizard"}, {"input": "3", "output": "archer"}]
+    print(Constants.GAME_HERO_TYPE_CHOOSE_K + Constants.GAME_HERO_TYPE_CHOOSE_W + Constants.GAME_HERO_TYPE_CHOOSE_A)
+    expectedInput = [
+        {"input": "1", "output": Constants.HERO_TYPE_KNIGHT},
+        {"input": "2", "output": Constants.HERO_TYPE_WIZARD},
+        {"input": "3", "output": Constants.HERO_TYPE_ARCHER}
+    ]
     hero_type = getInput(expectedInput)
 
     Meeple.addNewPlayer(hero_name, hero_type)
 
-#sum up all players and stats etc
-#check if all quests/items loaded
+print("\n~ ~ ~ Folgende Spieler haben das Spielfeld betreten: ~ ~ ~")
+print("\n".join([f"{i.name} spielt {i.hero_type}." for i in Meeple.players]))
+
+print("\n~ ~ ~ Folgende Vorkehrungen wurden getroffen: ~ ~ ~")
+print(f"{len(Quest.quest_table)} Questkarten wurden gemischt und {len(Item.item_table)} Gegenstände wurden Monstern übergeben.")
 
 game_running = True
 
@@ -171,21 +178,34 @@ while game_running:
             break
 
         rnd_quest = Quest.getQuest()
+
+        if rnd_quest is None:
+            game_running = False
+            print("run at of quests")
+            break
+
         print(Constants.GAME_PLAYER_GO.replace("XX", next_player.name))
 
         if next_player.checkSkipMove() or next_player.archer_talent_roll():
             
+            #TODO
+            #eval questtype
             result = executeQuest(rnd_quest, next_player)
 
             if result:
                 next_player.updateStats()
+                next_player.progress += 1
                 print(Constants.GAME_PLAYER_STAT_CHANGE)
                 
                 if next_player.wizard_talent_roll():
+                    print(Constants.GAME_PLAYER_GO.replace("XX", next_player.name))
                     rnd_quest = Quest.getQuest()
+                    #TODO
+                    #eval questtype
                     result = executeQuest(rnd_quest, next_player)
 
                     if result:
+                        next_player.progress += 1
                         next_player.updateStats()
                         print(Constants.GAME_PLAYER_STAT_CHANGE)
                     else:

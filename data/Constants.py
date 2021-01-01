@@ -8,15 +8,49 @@ DICE_SIDES = 6
 HERO_TYPE_KNIGHT = "knight"
 HERO_TYPE_WIZARD = "wizard"
 HERO_TYPE_ARCHER = "archer"
+HERO_TYPE_KNIGHT_LOC = "Ritter"
+HERO_TYPE_WIZARD_LOC = "Zauberer"
+HERO_TYPE_ARCHER_LOC = "Bogenschütze"
+
+WIZARD_TALENT_REQ = 5
+ARCHER_TALENT_REQ = 3
+KNIGHT_TALENT_REQ = 5
+WIZARD_TALENT_NAME = "Temporalschleife"
+ARCHER_TALENT_NAME = "Camouflage"
+KNIGHT_TALENT_NAME = "Schildwall"
+WIZARD_TALENT_DESC = f"Wenn du eine Quest erfolgreich abschließt, kannst du mit einer {WIZARD_TALENT_REQ} oder höher eine weitere Quest diese Runde bestreiten."
+ARCHER_TALENT_DESC = f"Wenn du die nächste Runde aussetzen musst, kannst du das mit einer {ARCHER_TALENT_REQ} oder höher verhindern."
+KNIGHT_TALENT_DESC = f"Wenn du eine Quest verlierst, kannst du mit einer {KNIGHT_TALENT_REQ} oder höher den Lebenspunkteverlust verhindern."
+WIZARD_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {WIZARD_TALENT_NAME} ~ ~ ~"
+ARCHER_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {ARCHER_TALENT_NAME} ~ ~ ~"
+KNIGHT_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {KNIGHT_TALENT_NAME} ~ ~ ~"
+ARCHER_TALENT_PROC = "Du hast keinen Lebenspunkt verloren."
+WIZARD_TALENT_PROC = "Du kannst eine weitere Quest in diesem Zug machen."
+KNIGHT_TALENT_PROC = "Du musst die nächste Runde nicht aussetzen."
+WIZARD_STATS = {
+    "intellect": 4,
+    "charisma": 2,
+    "strength": -1
+}
+ARCHER_STATS = {
+    "agility": 4,
+    "speed": 2,
+    "charisma": 1
+}
+KNIGHT_STATS = {
+    "strength": 3,
+    "lifepoints": 2,
+    "speed": -1
+}
 
 GAME_NAME = "Fortune and Glory"
-GAME_WELCOME = "~ ~ ~ Herzlich Willkommen zu 'Fortune and Glory'! ~ ~ ~\nWie viele Spieler seid ihr?"
+GAME_WELCOME = "\n~ ~ ~ Herzlich Willkommen zu 'Fortune and Glory'! ~ ~ ~\n\nWie viele Spieler seid ihr?"
 MIN_PLAYERS = 1
 MAX_PLAYERS = 4
 
 QUEST_INPUT_DECISION = "Gib folgendes ein [XX]: "
-QUEST_SUCCESS = "Du hast die Aufgabe bestanden."
-QUEST_FAIL = "Die Aufgabe ist fehlgeschlagen."
+QUEST_SUCCESS = "\t=> Du hast die Aufgabe bestanden.\n"
+QUEST_FAIL = "\t=> Die Aufgabe ist fehlgeschlagen.\n"
 QUEST_ROLLING_RESULT = "Die Kosten betragen XX. Dein Ergebnis ist YY."
 QUEST_HERO_LIFEPOINTS_LEFT = "Du hast noch XX Lebenspunkte übrig."
 QUEST_HERO_LIFEPOINTS_ZERO = "Du hast keine Lebenspunkte mehr."
@@ -25,20 +59,20 @@ QUEST_HERO_INV_FULL_1 = "Du kannst den Gegenstand nicht mitnehmen, da dein Inven
 QUEST_HERO_INV_FULL_2 = "Du kannst den Gegenstand nicht mitnehmen, da dein Inventar leider voll ist. Möchtest du einen Gegenstand dafür wegwerfen?"
 QUEST_HERO_INV_ITEM_ADDED = "XX wurde deinem Inventar hinzugefügt."
 QUEST_HERO_ITEM_DROPPED = "XX wurde liegen gelassen und nicht deinem Inventar hinzugefügt."
-QUEST_HERO_ITEM_DOUBLE = "Der erhaltene Gegenstand ist bereits in eurem Inventar. Ihr könnt ihn demnach nicht mehr mitnehmen."
+QUEST_HERO_ITEM_DOUBLE = "Der erhaltene Gegenstand ist bereits in eurem Inventar. Du kannst ihn demnach nicht mehr mitnehmen."
 QUEST_HERO_ITEM_REPLACE = "XX wurde durch YY in deinem Inventar ersetzt."
 
 GAME_LOST = 0
 GAME_CONTINUE = 1
-GAME_LOST_FOR_ALL = "Habt alle verloren"
-GAME_PLAYER_GO = "~ ~ ~ XX ist an der Reihe! ~ ~ ~"
+GAME_LOST_FOR_ALL = "\n~ ~ ~ Spiel vorbei! Ihr habt alle verloren! ~ ~ ~"
+GAME_PLAYER_GO = "\n~ ~ ~ XX ist an der Reihe! ~ ~ ~"
 GAME_PLAYER_LOST = "Du hast keine Lebenspunkte mehr und kannst nicht mehr mitspielen."
 GAME_PLAYER_SKIP_MOVE = "Du musst diese Runde aussetzen."
-GAME_PLAYER_STAT_CHANGE = "Deine Stats haben sich geändert."
-GAME_KNIGHT_QUEST_PROC = "Du hast einen Lebenspunkt erhalten, statt einen zu verlieren."
-GAME_WIZARD_QUEST_PROC = "Du kannst eine weitere Quest in diesem Zug machen."
-GAME_ARCHER_QUEST_PROC = "Du musst die nächste Runde nicht aussetzen."
-GAME_NEW_ROUND_START = "~ ~ ~ Runde XX beginnt: ~ ~ ~"
-GAME_CHOOSE_NUM_PLAYERS = "~ ~ ~ Spieler XX ~ ~ ~\nBitte mach ein paar Anpassungen für deinen Helden."
+GAME_PLAYER_STAT_CHANGE = "Deine Werte haben sich geändert."
+GAME_NEW_ROUND_START = "\n~ ~ ~ Runde XX beginnt: ~ ~ ~"
+GAME_CHOOSE_NUM_PLAYERS = "\n~ ~ ~ Spieler XX ~ ~ ~\nBitte mach ein paar Anpassungen für deinen Helden."
 GAME_HERO_NAME_CHOOSE = "Wie möchtest du genannt werden?"
-GAME_HERO_TYPE_CHOOSE = "Welchen Heldentypen möchstest du spielen?\nWahlmöglichkeiten: Ritter, Magier, Bogenschütze"
+GAME_HERO_TYPE_CHOOSE = "\nWelchen Heldentypen möchstest du spielen?"
+GAME_HERO_TYPE_CHOOSE_K = f"1) {HERO_TYPE_KNIGHT_LOC}:\n\tTalent -> {KNIGHT_TALENT_DESC}\n\tZusätzliche Werte -> {KNIGHT_STATS}\n"
+GAME_HERO_TYPE_CHOOSE_W = f"2) {HERO_TYPE_WIZARD_LOC}:\n\tTalent -> {WIZARD_TALENT_DESC}\n\tZusätzliche Werte -> {WIZARD_STATS}\n"
+GAME_HERO_TYPE_CHOOSE_A = f"3) {HERO_TYPE_ARCHER_LOC}:\n\tTalent -> {ARCHER_TALENT_DESC}\n\tZusätzliche Werte -> {ARCHER_STATS}"
