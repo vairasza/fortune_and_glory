@@ -6,10 +6,10 @@
         "text_confirm": "Auf der Mitte der Brücke hörst du ein bedrohliches Zischen: Eines der Seile, das die Brücke hält, ist gerissen. Renne um dein Leben!",
         "text_deny": "Du versuchst, einen anderen Weg um die Schlucht herum zu finden, doch das kostet Zeit – Setze eine Runde aus.",
         "quest_yes_category": "speed",
-        "quest_yes_price": 5,
+        "quest_yes_price": 9,
         "quest_no_category": "skipMove",
-        "quest_no_price": 0,
-        "difficulty": 1
+        "quest_no_price": 8,
+        "difficulty": 0
     },
     {
         "quest_id": 1,
@@ -18,10 +18,10 @@
         "text_confirm": "Als tapferer Held stellst du dich mit Schwert und Schild diesem Monster. Ein erbitterter Kampf beginnt...",
         "text_deny": "Du weißt genau, dass du nicht die Stärke besitzt, um den Drachen alleine niederzuringen. Du versuchst dich zu verstecken und hoffst, dass du nicht entdeckt wirst.",
         "quest_yes_category": "strength",
-        "quest_yes_price": 15,
+        "quest_yes_price": 21,
         "quest_no_category": "intellect",
-        "quest_no_price": 10,
-        "difficulty": 10
+        "quest_no_price": 17,
+        "difficulty": 4
     },
     {
         "quest_id": 2,
@@ -30,9 +30,45 @@
         "text_confirm": "Du versucht den Hauptmann mit deinem Charisma zu überzeugen, dass du nur auf der Durchreise bist und du keinen Ärger machen wirst.",
         "text_deny": "Dein Pech. Du wirst in die nächste Stadt gebracht und dort solange eingesperrt, bis über dein Urteil entschieden wird - Setze eine Runde aus.",
         "quest_yes_category": "charisma",
-        "quest_yes_price": 9,
+        "quest_yes_price": 12,
         "quest_no_category": "skipMove",
-        "quest_no_price": 0,
-        "difficulty": 6
+        "quest_no_price": 11,
+        "difficulty": 2
+    },
+    {
+        "quest_id": 2,
+        "quest_type": 0,
+        "text_decision": "Du entscheidest dich den kurzen Weg durch den Elfenwald einzuschlagen, um nicht tagelang außen herumlaufen zu müssen. Nach einiger Zeit taucht eine Patrouille von Elfenbogenschützen auf und nimmt dich fest: möchtest du den Hauptmann davon überzeugen, dass du harmlos bist und nur auf Durchreise bist?",
+        "text_confirm": "Du versucht den Hauptmann mit deinem Charisma zu überzeugen, dass du nur auf der Durchreise bist und du keinen Ärger machen wirst.",
+        "text_deny": "Dein Pech. Du wirst in die nächste Stadt gebracht und dort solange eingesperrt, bis über dein Urteil entschieden wird - Setze eine Runde aus.",
+        "quest_yes_category": "charisma",
+        "quest_yes_price": 12,
+        "quest_no_category": "skipMove",
+        "quest_no_price": 11,
+        "difficulty": 2
+    },
+    {
+        "quest_id": 2,
+        "quest_type": 0,
+        "text_decision": "Du entscheidest dich den kurzen Weg durch den Elfenwald einzuschlagen, um nicht tagelang außen herumlaufen zu müssen. Nach einiger Zeit taucht eine Patrouille von Elfenbogenschützen auf und nimmt dich fest: möchtest du den Hauptmann davon überzeugen, dass du harmlos bist und nur auf Durchreise bist?",
+        "text_confirm": "Du versucht den Hauptmann mit deinem Charisma zu überzeugen, dass du nur auf der Durchreise bist und du keinen Ärger machen wirst.",
+        "text_deny": "Dein Pech. Du wirst in die nächste Stadt gebracht und dort solange eingesperrt, bis über dein Urteil entschieden wird - Setze eine Runde aus.",
+        "quest_yes_category": "charisma",
+        "quest_yes_price": 12,
+        "quest_no_category": "skipMove",
+        "quest_no_price": 11,
+        "difficulty": 2
+    },
+    {
+        "quest_id": 2,
+        "quest_type": 0,
+        "text_decision": "Du entscheidest dich den kurzen Weg durch den Elfenwald einzuschlagen, um nicht tagelang außen herumlaufen zu müssen. Nach einiger Zeit taucht eine Patrouille von Elfenbogenschützen auf und nimmt dich fest: möchtest du den Hauptmann davon überzeugen, dass du harmlos bist und nur auf Durchreise bist?",
+        "text_confirm": "Du versucht den Hauptmann mit deinem Charisma zu überzeugen, dass du nur auf der Durchreise bist und du keinen Ärger machen wirst.",
+        "text_deny": "Dein Pech. Du wirst in die nächste Stadt gebracht und dort solange eingesperrt, bis über dein Urteil entschieden wird - Setze eine Runde aus.",
+        "quest_yes_category": "charisma",
+        "quest_yes_price": 12,
+        "quest_no_category": "skipMove",
+        "quest_no_price": 11,
+        "difficulty": 2
     }
 ]

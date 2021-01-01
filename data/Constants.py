@@ -24,23 +24,32 @@ KNIGHT_TALENT_DESC = f"Wenn du eine Quest verlierst, kannst du mit einer {KNIGHT
 WIZARD_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {WIZARD_TALENT_NAME} ~ ~ ~"
 ARCHER_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {ARCHER_TALENT_NAME} ~ ~ ~"
 KNIGHT_TALENT_USE = f"~ ~ ~ Du setzt dein Talent ein: {KNIGHT_TALENT_NAME} ~ ~ ~"
-ARCHER_TALENT_PROC = "Du hast keinen Lebenspunkt verloren."
-WIZARD_TALENT_PROC = "Du kannst eine weitere Quest in diesem Zug machen."
-KNIGHT_TALENT_PROC = "Du musst die nächste Runde nicht aussetzen."
+ARCHER_TALENT_PROC = "Erfolg: Du hast keinen Lebenspunkt verloren."
+WIZARD_TALENT_PROC = "Erfolg: Du kannst eine weitere Quest in diesem Zug machen."
+KNIGHT_TALENT_PROC = "Erfolg: Du musst die nächste Runde nicht aussetzen."
 WIZARD_STATS = {
+    "lifepoints": 0,
+    "strength": -1,
     "intellect": 4,
-    "charisma": 2,
-    "strength": -1
+    "agility": 0,
+    "speed": 0,
+    "charisma": 2
 }
 ARCHER_STATS = {
-    "agility": 4,
+    "lifepoints": 0,
+    "strength": 0,
+    "intellect": 4,
+    "agility": 0,
     "speed": 2,
     "charisma": 1
 }
 KNIGHT_STATS = {
-    "strength": 3,
     "lifepoints": 2,
-    "speed": -1
+    "strength": 3,
+    "intellect": 0,
+    "agility": 0,
+    "speed": -1,
+    "charisma": 0
 }
 
 GAME_NAME = "Fortune and Glory"
@@ -49,8 +58,8 @@ MIN_PLAYERS = 1
 MAX_PLAYERS = 4
 
 QUEST_INPUT_DECISION = "Gib folgendes ein [XX]: "
-QUEST_SUCCESS = "\t=> Du hast die Aufgabe bestanden.\n"
-QUEST_FAIL = "\t=> Die Aufgabe ist fehlgeschlagen.\n"
+QUEST_SUCCESS = "\t=> Erfolg: Du hast die Aufgabe bestanden.\n"
+QUEST_FAIL = "\t=> Niederlage: Die Aufgabe ist fehlgeschlagen.\n"
 QUEST_ROLLING_RESULT = "Die Kosten betragen XX. Dein Ergebnis ist YY."
 QUEST_HERO_LIFEPOINTS_LEFT = "Du hast noch XX Lebenspunkte übrig."
 QUEST_HERO_LIFEPOINTS_ZERO = "Du hast keine Lebenspunkte mehr."
@@ -76,3 +85,4 @@ GAME_HERO_TYPE_CHOOSE = "\nWelchen Heldentypen möchstest du spielen?"
 GAME_HERO_TYPE_CHOOSE_K = f"1) {HERO_TYPE_KNIGHT_LOC}:\n\tTalent -> {KNIGHT_TALENT_DESC}\n\tZusätzliche Werte -> {KNIGHT_STATS}\n"
 GAME_HERO_TYPE_CHOOSE_W = f"2) {HERO_TYPE_WIZARD_LOC}:\n\tTalent -> {WIZARD_TALENT_DESC}\n\tZusätzliche Werte -> {WIZARD_STATS}\n"
 GAME_HERO_TYPE_CHOOSE_A = f"3) {HERO_TYPE_ARCHER_LOC}:\n\tTalent -> {ARCHER_TALENT_DESC}\n\tZusätzliche Werte -> {ARCHER_STATS}"
+GAME_ROUND_OVER = "~ ~ ~ Der Zug von XX ist nun zu Ende! ~ ~ ~\n"

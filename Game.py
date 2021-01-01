@@ -133,6 +133,7 @@ def executeQuest(quest, hero):
 #Game Starts Here
 Item.loadItems()
 Quest.loadQuests()
+print(Item.length)
 
 print(Constants.GAME_WELCOME)
 #input number of player
@@ -158,7 +159,7 @@ for i in range(player_number):
     Meeple.addNewPlayer(hero_name, hero_type)
 
 print("\n~ ~ ~ Folgende Spieler haben das Spielfeld betreten: ~ ~ ~")
-print("\n".join([f"{i.name} spielt {i.hero_type}." for i in Meeple.players]))
+print("\n".join([f"{i.name} spielt {i.getHeroType()}." for i in Meeple.players]))
 
 print("\n~ ~ ~ Folgende Vorkehrungen wurden getroffen: ~ ~ ~")
 print(f"{len(Quest.quest_table)} Questkarten wurden gemischt und {len(Item.item_table)} Gegenstände wurden Monstern übergeben.")
@@ -181,7 +182,7 @@ while game_running:
 
         if rnd_quest is None:
             game_running = False
-            print("run at of quests")
+            print("run out of quests")
             break
 
         print(Constants.GAME_PLAYER_GO.replace("XX", next_player.name))
@@ -193,7 +194,6 @@ while game_running:
             result = executeQuest(rnd_quest, next_player)
 
             if result:
-                next_player.updateStats()
                 next_player.progress += 1
                 print(Constants.GAME_PLAYER_STAT_CHANGE)
                 
@@ -206,7 +206,6 @@ while game_running:
 
                     if result:
                         next_player.progress += 1
-                        next_player.updateStats()
                         print(Constants.GAME_PLAYER_STAT_CHANGE)
                     else:
                         Meeple.removePlayer(next_player)
@@ -215,11 +214,13 @@ while game_running:
             else:
                 Meeple.removePlayer(next_player)
                 print(Constants.GAME_PLAYER_LOST)
+
         else:
             next_player.freeSkipMoves()
             print(Constants.GAME_PLAYER_SKIP_MOVE)
         
         next_player.setRoundPlayed()
+        print(Constants.GAME_ROUND_OVER.replace("XX", next_player.name))
 
     Meeple.rounds +=1
     Meeple.resetRoundPlayed()

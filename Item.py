@@ -11,6 +11,8 @@ class Item:
         self.rarity = item_obj["rarity"]
         self.name = item_obj["name"]
         self.properties = item_obj["properties"]
+        #0-> weapon, 1 -> offhand, 2 -> head, 3 -> chest, 4 -> trinket
+        self.category = item_obj["category"]
 
     def __str__(self):
         name = self.name
@@ -22,7 +24,7 @@ class Item:
         return self.rarity < other.rarity
     
     def getStats(self):
-        return ', '.join([f'{key}: +{val}' for key, val in self.properties.items()])
+        return ', '.join([f'{key}: +{val}' for key, val in self.properties.items() if val > 0])
     
     @staticmethod
     def loadItems():
